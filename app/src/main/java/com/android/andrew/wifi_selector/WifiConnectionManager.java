@@ -15,8 +15,8 @@ public class WifiConnectionManager {
         wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
     }
 
-    List<WifiConfigurationWrapper> getKnownWifiNetworks(){
-        List<WifiConfigurationWrapper> networkIds = new ArrayList<>();
+    List<WifiConfigurationDecorator> getKnownWifiNetworks(){
+        List<WifiConfigurationDecorator> networkIds = new ArrayList<>();
         List<WifiConfiguration> configuredNetworks = wifiManager.getConfiguredNetworks();
         //No configured wifi networks
         if ( configuredNetworks == null ){
@@ -24,12 +24,12 @@ public class WifiConnectionManager {
         }
 
         for (WifiConfiguration wifiConfig : configuredNetworks) {
-            networkIds.add( new WifiConfigurationWrapper( wifiConfig ) );
+            networkIds.add( new WifiConfigurationDecorator( wifiConfig ) );
         }
         return networkIds;
     }
 
-    void connect( WifiConfigurationWrapper wifiConfig ){
+    void connect( WifiConfigurationDecorator wifiConfig ){
         wifiManager.enableNetwork(wifiConfig.getWifiConfig().networkId, true );
     }
 }
