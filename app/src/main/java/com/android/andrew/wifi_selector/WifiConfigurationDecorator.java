@@ -2,11 +2,11 @@ package com.android.andrew.wifi_selector;
 
 import android.net.wifi.WifiConfiguration;
 
-public class WifiConfigurationWrapper  {
+public class WifiConfigurationDecorator {
 
     private final WifiConfiguration delegate;
 
-    public WifiConfigurationWrapper(WifiConfiguration delegate) {
+    public WifiConfigurationDecorator(WifiConfiguration delegate) {
         this.delegate = delegate;
     }
 
