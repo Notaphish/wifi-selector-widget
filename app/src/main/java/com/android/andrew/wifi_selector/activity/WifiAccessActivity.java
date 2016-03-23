@@ -1,13 +1,20 @@
-package com.android.andrew.wifi_selector;
+package com.android.andrew.wifi_selector.activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
-public class WifiAccessActivity extends AppCompatActivity {
+import com.android.andrew.wifi_selector.R;
+import com.android.andrew.wifi_selector.WifiConfigurationDecorator;
+import com.android.andrew.wifi_selector.WifiConnectionManager;
+import com.android.andrew.wifi_selector.widget.WifiChoiceDialog;
+
+public class WifiAccessActivity extends AppCompatActivity implements DialogInterface.OnClickListener{
 
     private WifiConnectionManager wifiManager;
 
@@ -29,6 +36,19 @@ public class WifiAccessActivity extends AppCompatActivity {
             }
         });
 
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                WifiChoiceDialog dialog = new WifiChoiceDialog();
+                dialog.show(getSupportFragmentManager(), "something");
+                WifiConfigurationDecorator item = (WifiConfigurationDecorator) parent.getItemAtPosition(position);
+                return true;            }
+        } );
+
     }
 
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        Toast.makeText( getApplicationContext(), "Clicked on something in main activity ", Toast.LENGTH_SHORT).show();
+    }
 }

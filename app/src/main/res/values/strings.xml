@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Wifi-Selector</string>
 
+    <string-array name="choice_dialog_options">
+        <item name="choice_dialog_favourite"> Add As Favourite</item>
+    </string-array>
+
+    <string name="choice_dialog_title"> Options</string>
+
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->
