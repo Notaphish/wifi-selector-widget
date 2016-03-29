@@ -10,13 +10,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.WifiAccessActivity"
-    tools:showIn="@layout/activity_wifi_access">
+    tools:showIn="@layout/activity_wifi_access"
+    android:theme="@style/AppTheme">
 
-    <ListView
+    <ExpandableListView
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:id="@+id/wifi_list_view"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        style="@style/Base.TextAppearance.AppCompat" />
 </RelativeLayout>
