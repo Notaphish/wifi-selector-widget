@@ -1,4 +1,4 @@
-package com.android.andrew.wifi_selector;
+package com.android.andrew.wifi_selector.activity;
 
 
 import android.annotation.TargetApi;
@@ -19,6 +19,8 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
+
+import com.android.andrew.wifi_selector.R;
 
 import java.util.List;
 

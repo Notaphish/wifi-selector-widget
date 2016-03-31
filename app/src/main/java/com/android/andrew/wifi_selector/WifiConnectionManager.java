@@ -10,26 +10,35 @@ import java.util.List;
 public class WifiConnectionManager {
 
     private final WifiManager wifiManager;
+    private final List<WifiConfigurationDecorator> networkIds;
+
 
     public WifiConnectionManager( Context context){
         wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        networkIds = new ArrayList<>();
+        populateNetworks();
     }
 
-    List<WifiConfigurationDecorator> getKnownWifiNetworks(){
-        List<WifiConfigurationDecorator> networkIds = new ArrayList<>();
+    private void populateNetworks() {
         List<WifiConfiguration> configuredNetworks = wifiManager.getConfiguredNetworks();
         //No configured wifi networks
         if ( configuredNetworks == null ){
-            return new ArrayList<>();
+            return;
         }
-
         for (WifiConfiguration wifiConfig : configuredNetworks) {
-            networkIds.add( new WifiConfigurationDecorator( wifiConfig ) );
+            networkIds.add(new WifiConfigurationDecorator(wifiConfig));
         }
+    }
+
+    public List<WifiConfigurationDecorator> getKnownNetworks(){
         return networkIds;
     }
 
-    void connect( WifiConfigurationDecorator wifiConfig ){
+    public WifiConfigurationDecorator getKnownNetwork( int i){
+        return networkIds.get(i);
+    }
+
+    public void connect( WifiConfigurationDecorator wifiConfig ){
         wifiManager.enableNetwork(wifiConfig.getWifiConfig().networkId, true );
     }
 }
