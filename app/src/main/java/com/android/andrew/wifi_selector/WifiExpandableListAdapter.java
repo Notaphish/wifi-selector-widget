@@ -16,18 +16,18 @@ import java.util.Map;
 public class WifiExpandableListAdapter extends BaseExpandableListAdapter {
 
     private final List<String> groups = Lists.newArrayList("Favourites", "Everything else");
-    private Map<String, List<WifiConfigurationDecorator>> categoryToWifiDecorators;
+    private Map<String, List<WifiConfigurationDecorator>> groupToWifiDecorators;
 
     public WifiExpandableListAdapter(List<WifiConfigurationDecorator> incFavourites, List<WifiConfigurationDecorator> others) {
         super();
-        categoryToWifiDecorators = new HashMap<>();
-        categoryToWifiDecorators.put(groups.get(0), incFavourites);
-        categoryToWifiDecorators.put(groups.get(1), others);
+        groupToWifiDecorators = new HashMap<>();
+        groupToWifiDecorators.put(groups.get(0), incFavourites);
+        groupToWifiDecorators.put(groups.get(1), others);
 
     }
 
-    public WifiConfigurationDecorator getWifiDecorator(int groupPosition, int childPosition) {
-        return getWifiDecoratorsForGroup(groupPosition).get(childPosition);
+    public WifiConfigurationDecorator getWifiDecorator(int groupPosition, int indexOfDecoratorWithinGroup) {
+        return getWifiDecoratorsForGroup(groupPosition).get(indexOfDecoratorWithinGroup);
     }
 
     @Override
@@ -38,10 +38,6 @@ public class WifiExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int groupPosition) {
         return getWifiDecoratorsForGroup(groupPosition).size();
-    }
-
-    private List<WifiConfigurationDecorator> getWifiDecoratorsForGroup(int groupPosition) {
-        return categoryToWifiDecorators.get(groups.get(groupPosition));
     }
 
     @Override
@@ -99,5 +95,9 @@ public class WifiExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+    
+    private List<WifiConfigurationDecorator> getWifiDecoratorsForGroup(int groupPosition) {
+        return groupToWifiDecorators.get(groups.get(groupPosition));
     }
 }

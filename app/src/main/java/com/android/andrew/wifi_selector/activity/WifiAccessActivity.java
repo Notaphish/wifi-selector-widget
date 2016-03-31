@@ -60,7 +60,6 @@ public class WifiAccessActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.favourite:
                 wifiManager.addFavourite(wifiConnecitonManager.getKnownNetwork((int) info.packedPosition));
-                Toast.makeText(getApplicationContext(), " decorator values is " + wifiConnecitonManager.getKnownNetwork((int) info.packedPosition), Toast.LENGTH_SHORT).show();
         }
         return false;
     }
