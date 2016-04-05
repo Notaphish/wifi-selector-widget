@@ -5,7 +5,7 @@ import java.util.List;
 
 public class WifiManager {
 
-    private List<WifiConfigurationDecorator> favourites;
+    private ArrayList<WifiConfigurationDecorator> favourites;
     private final List<WifiConfigurationDecorator> others;
 
     public WifiManager(List<WifiConfigurationDecorator> others) {
@@ -16,8 +16,11 @@ public class WifiManager {
     public void addFavourite( WifiConfigurationDecorator wifiConfig){
         favourites.add(wifiConfig);
     }
+    public void addFavourites( List<WifiConfigurationDecorator> incFavourites ){
+        favourites.addAll(incFavourites);
+    }
 
-    public List<WifiConfigurationDecorator> getFavourites(){
+    public ArrayList<WifiConfigurationDecorator> getFavourites(){
         return favourites;
     }
 

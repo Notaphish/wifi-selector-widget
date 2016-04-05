@@ -1,6 +1,7 @@
 package com.android.andrew.wifi_selector.activity;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -17,8 +18,11 @@ import com.android.andrew.wifi_selector.WifiConnectionManager;
 import com.android.andrew.wifi_selector.WifiExpandableListAdapter;
 import com.android.andrew.wifi_selector.WifiManager;
 
+import java.util.ArrayList;
+
 public class WifiAccessActivity extends AppCompatActivity {
 
+    private static final String BUNDLE_FAVOURITES = "FAVOURITES";
     private WifiConnectionManager wifiConnecitonManager;
     private WifiManager wifiManager;
 
@@ -28,8 +32,10 @@ public class WifiAccessActivity extends AppCompatActivity {
         setContentView(R.layout.activity_wifi_access);
         wifiConnecitonManager = new WifiConnectionManager(getApplicationContext());
         wifiManager = new WifiManager(wifiConnecitonManager.getKnownNetworks());
+        if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_FAVOURITES))
+            wifiManager.addFavourites(savedInstanceState.<WifiConfigurationDecorator>getParcelableArrayList(BUNDLE_FAVOURITES));
 
-        final WifiExpandableListAdapter adapter = new WifiExpandableListAdapter( wifiManager.getFavourites(), wifiManager.getNormalNetworks() );
+        final WifiExpandableListAdapter adapter = new WifiExpandableListAdapter(wifiManager.getFavourites(), wifiManager.getNormalNetworks());
 
         ExpandableListView listView = (ExpandableListView) findViewById(R.id.wifi_list_view);
         listView.setAdapter(adapter);
@@ -43,6 +49,12 @@ public class WifiAccessActivity extends AppCompatActivity {
         });
         listView.expandGroup(1);
         registerForContextMenu(listView);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        bundle.putParcelableArrayList(BUNDLE_FAVOURITES, wifiManager.getFavourites());
     }
 
     @Override
