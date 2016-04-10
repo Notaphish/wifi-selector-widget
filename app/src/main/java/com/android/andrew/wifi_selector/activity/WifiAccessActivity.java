@@ -21,6 +21,7 @@ public class WifiAccessActivity extends AppCompatActivity {
     private static final String BUNDLE_KEY_FAVOURITES = "FAVOURITES";
     private WifiConnectionManager wifiConnecitonManager;
     private WifiManager wifiManager;
+    private WifiExpandableListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class WifiAccessActivity extends AppCompatActivity {
             wifiManager.addFavourites(savedInstanceState.<WifiConfigurationDecorator>getParcelableArrayList(BUNDLE_KEY_FAVOURITES));
 
 
-        final WifiExpandableListAdapter adapter = new WifiExpandableListAdapter(
+        adapter = new WifiExpandableListAdapter(
                 getApplicationContext(),
                 wifiManager.getFavourites(),
                 wifiManager.getKnownNetworks());
@@ -47,7 +48,8 @@ public class WifiAccessActivity extends AppCompatActivity {
                 return true;
             }
         });
-        listView.expandGroup(1);
+        listView.expandGroup(WifiExpandableListAdapter.FAVOURITE_GROUP);
+        listView.expandGroup(WifiExpandableListAdapter.KNOWN_NETWORK_GROUP);
         registerForContextMenu(listView);
     }
 
@@ -62,6 +64,7 @@ public class WifiAccessActivity extends AppCompatActivity {
         super.onCreateContextMenu(menu, v, info);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.wifi_option_menu, menu);
+
     }
 
     @Override
@@ -71,7 +74,9 @@ public class WifiAccessActivity extends AppCompatActivity {
         //potential - a network becomes unknown do we remove it from the favourites
         switch (item.getItemId()) {
             case R.id.favourite:
-                wifiManager.addFavourite(wifiConnecitonManager.getKnownNetwork((int) info.packedPosition));
+                WifiConfigurationDecorator network = wifiConnecitonManager.getKnownNetwork((int) info.packedPosition);
+                wifiManager.addFavourite(network);
+                adapter.notifyDataSetChanged();
                 break;
             default:
         }
