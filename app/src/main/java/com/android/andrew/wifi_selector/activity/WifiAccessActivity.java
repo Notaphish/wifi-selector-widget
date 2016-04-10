@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
-import android.widget.Toast;
 
 import com.android.andrew.wifi_selector.R;
 import com.android.andrew.wifi_selector.WifiConfigurationDecorator;
@@ -19,6 +18,7 @@ import com.android.andrew.wifi_selector.WifiManager;
 
 public class WifiAccessActivity extends AppCompatActivity {
 
+    private static final String BUNDLE_KEY_FAVOURITES = "FAVOURITES";
     private WifiConnectionManager wifiConnecitonManager;
     private WifiManager wifiManager;
 
@@ -28,8 +28,14 @@ public class WifiAccessActivity extends AppCompatActivity {
         setContentView(R.layout.activity_wifi_access);
         wifiConnecitonManager = new WifiConnectionManager(getApplicationContext());
         wifiManager = new WifiManager(wifiConnecitonManager.getKnownNetworks());
+        if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_KEY_FAVOURITES))
+            wifiManager.addFavourites(savedInstanceState.<WifiConfigurationDecorator>getParcelableArrayList(BUNDLE_KEY_FAVOURITES));
 
-        final WifiExpandableListAdapter adapter = new WifiExpandableListAdapter( wifiManager.getFavourites(), wifiManager.getNormalNetworks() );
+
+        final WifiExpandableListAdapter adapter = new WifiExpandableListAdapter(
+                getApplicationContext(),
+                wifiManager.getFavourites(),
+                wifiManager.getKnownNetworks());
 
         ExpandableListView listView = (ExpandableListView) findViewById(R.id.wifi_list_view);
         listView.setAdapter(adapter);
@@ -43,6 +49,12 @@ public class WifiAccessActivity extends AppCompatActivity {
         });
         listView.expandGroup(1);
         registerForContextMenu(listView);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        bundle.putParcelableArrayList(BUNDLE_KEY_FAVOURITES, wifiManager.getFavourites());
     }
 
     @Override
@@ -60,6 +72,8 @@ public class WifiAccessActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.favourite:
                 wifiManager.addFavourite(wifiConnecitonManager.getKnownNetwork((int) info.packedPosition));
+                break;
+            default:
         }
         return false;
     }

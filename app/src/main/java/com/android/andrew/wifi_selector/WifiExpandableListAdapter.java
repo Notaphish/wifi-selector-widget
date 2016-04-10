@@ -15,15 +15,16 @@ import java.util.Map;
 
 public class WifiExpandableListAdapter extends BaseExpandableListAdapter {
 
-    private final List<String> groups = Lists.newArrayList("Favourites", "Everything else");
+    private final List<String> groups;
     private Map<String, List<WifiConfigurationDecorator>> groupToWifiDecorators;
 
-    public WifiExpandableListAdapter(List<WifiConfigurationDecorator> incFavourites, List<WifiConfigurationDecorator> others) {
+    public WifiExpandableListAdapter(Context context, List<WifiConfigurationDecorator> incFavourites, List<WifiConfigurationDecorator> others) {
         super();
         groupToWifiDecorators = new HashMap<>();
+        groups = Lists.newArrayList( context.getString(R.string.list_view_header_favourite), context.getString(R.string.list_view_header_known));
+
         groupToWifiDecorators.put(groups.get(0), incFavourites);
         groupToWifiDecorators.put(groups.get(1), others);
-
     }
 
     public WifiConfigurationDecorator getWifiDecorator(int groupPosition, int indexOfDecoratorWithinGroup) {

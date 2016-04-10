@@ -5,19 +5,22 @@ import java.util.List;
 
 public class WifiManager {
 
-    private List<WifiConfigurationDecorator> favourites;
-    private final List<WifiConfigurationDecorator> others;
+    private ArrayList<WifiConfigurationDecorator> favourites;
+    private final List<WifiConfigurationDecorator> knownNetworks;
 
-    public WifiManager(List<WifiConfigurationDecorator> others) {
+    public WifiManager(List<WifiConfigurationDecorator> knownNetworks) {
         this.favourites = new ArrayList<>();
-        this.others = others;
+        this.knownNetworks = knownNetworks;
     }
 
     public void addFavourite( WifiConfigurationDecorator wifiConfig){
         favourites.add(wifiConfig);
     }
+    public void addFavourites( List<WifiConfigurationDecorator> incFavourites ){
+        favourites.addAll(incFavourites);
+    }
 
-    public List<WifiConfigurationDecorator> getFavourites(){
+    public ArrayList<WifiConfigurationDecorator> getFavourites(){
         return favourites;
     }
 
@@ -26,10 +29,10 @@ public class WifiManager {
     }
 
     public void addNetwork( WifiConfigurationDecorator decorator ){
-        others.add(decorator);
+        knownNetworks.add(decorator);
     }
 
-    public List<WifiConfigurationDecorator> getNormalNetworks(){
-        return others;
+    public List<WifiConfigurationDecorator> getKnownNetworks(){
+        return knownNetworks;
     }
 }
