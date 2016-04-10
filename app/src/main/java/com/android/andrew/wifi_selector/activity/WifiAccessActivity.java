@@ -1,7 +1,6 @@
 package com.android.andrew.wifi_selector.activity;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -16,9 +15,6 @@ import com.android.andrew.wifi_selector.WifiConfigurationDecorator;
 import com.android.andrew.wifi_selector.WifiConnectionManager;
 import com.android.andrew.wifi_selector.WifiExpandableListAdapter;
 import com.android.andrew.wifi_selector.WifiManager;
-import com.google.common.collect.Lists;
-
-import java.util.ArrayList;
 
 public class WifiAccessActivity extends AppCompatActivity {
 
@@ -39,7 +35,7 @@ public class WifiAccessActivity extends AppCompatActivity {
         final WifiExpandableListAdapter adapter = new WifiExpandableListAdapter(
                 getApplicationContext(),
                 wifiManager.getFavourites(),
-                wifiManager.getNormalNetworks());
+                wifiManager.getKnownNetworks());
 
         ExpandableListView listView = (ExpandableListView) findViewById(R.id.wifi_list_view);
         listView.setAdapter(adapter);

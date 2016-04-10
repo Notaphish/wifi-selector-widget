@@ -6,11 +6,11 @@ import java.util.List;
 public class WifiManager {
 
     private ArrayList<WifiConfigurationDecorator> favourites;
-    private final List<WifiConfigurationDecorator> others;
+    private final List<WifiConfigurationDecorator> knownNetworks;
 
-    public WifiManager(List<WifiConfigurationDecorator> others) {
+    public WifiManager(List<WifiConfigurationDecorator> knownNetworks) {
         this.favourites = new ArrayList<>();
-        this.others = others;
+        this.knownNetworks = knownNetworks;
     }
 
     public void addFavourite( WifiConfigurationDecorator wifiConfig){
@@ -29,10 +29,10 @@ public class WifiManager {
     }
 
     public void addNetwork( WifiConfigurationDecorator decorator ){
-        others.add(decorator);
+        knownNetworks.add(decorator);
     }
 
-    public List<WifiConfigurationDecorator> getNormalNetworks(){
-        return others;
+    public List<WifiConfigurationDecorator> getKnownNetworks(){
+        return knownNetworks;
     }
 }
