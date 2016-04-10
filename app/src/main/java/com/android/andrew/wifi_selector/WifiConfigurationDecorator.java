@@ -6,19 +6,17 @@ import android.os.Parcelable;
 
 public class WifiConfigurationDecorator implements Parcelable{
 
+    private final String ssid;
+
     private final WifiConfiguration delegate;
 
-    public WifiConfigurationDecorator(WifiConfiguration delegate) {
-        this.delegate = delegate;
+    public WifiConfigurationDecorator(WifiConfiguration wifiConfiguration) {
+        delegate = wifiConfiguration;
+        ssid = delegate.SSID;
     }
 
     public WifiConfiguration getWifiConfig() {
         return delegate;
-    }
-
-    @Override
-    public String toString() {
-        return delegate.SSID;
     }
 
     @Override
@@ -38,5 +36,25 @@ public class WifiConfigurationDecorator implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable( delegate, flags);
+    }
+
+    @Override
+    public String toString() {
+        return ssid;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        WifiConfigurationDecorator that = (WifiConfigurationDecorator) o;
+
+        return !(ssid != null ? !ssid.equals(that.ssid) : that.ssid != null);
+    }
+
+    @Override
+    public int hashCode() {
+        return ssid != null ? ssid.hashCode() : 0;
     }
 }

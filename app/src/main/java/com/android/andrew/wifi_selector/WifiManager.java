@@ -20,6 +20,18 @@ public class WifiManager {
         favourites.addAll(incFavourites);
     }
 
+    public List<WifiConfigurationDecorator> getKnownNetworks(){
+        return knownNetworks;
+    }
+
+    public boolean removeFavourite( WifiConfigurationDecorator favourite ){
+       return favourites.remove(favourite);
+    }
+
+    public boolean hasNetworkAsFavourite( WifiConfigurationDecorator favourite ){
+        return favourites.contains(favourite);
+    }
+
     public ArrayList<WifiConfigurationDecorator> getFavourites(){
         return favourites;
     }
@@ -28,11 +40,4 @@ public class WifiManager {
         return favourites.get(index);
     }
 
-    public void addNetwork( WifiConfigurationDecorator decorator ){
-        knownNetworks.add(decorator);
-    }
-
-    public List<WifiConfigurationDecorator> getKnownNetworks(){
-        return knownNetworks;
-    }
 }
