@@ -55,11 +55,6 @@ public class WifiAccessActivity extends AppCompatActivity {
         registerForContextMenu(listView);
     }
 
-    @NonNull
-    private ArrayList<String> getGroupHeadings() {
-        return Lists.newArrayList(getString(R.string.list_view_header_favourite), getString(R.string.list_view_header_known));
-    }
-
     @Override
     public void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
