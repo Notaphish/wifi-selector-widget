@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.common.collect.Lists;
 
@@ -100,7 +101,20 @@ public class WifiExpandableListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
-    
+
+    public WifiConfigurationDecorator removeFromFavourites(int packedPosition){
+        List<WifiConfigurationDecorator> favourites = getFavourites();
+        int groupToRemoveFrom = FAVOURITE_GROUP;
+        if ( packedPosition >= favourites.size() ){
+            return null;
+        }
+        return favourites.remove(packedPosition);
+    }
+
+    private List<WifiConfigurationDecorator> getFavourites() {
+        return groupToWifiDecorators.get(groups.get(FAVOURITE_GROUP));
+    }
+
     private List<WifiConfigurationDecorator> getWifiDecoratorsForGroup(int groupPosition) {
         return groupToWifiDecorators.get(groups.get(groupPosition));
     }
