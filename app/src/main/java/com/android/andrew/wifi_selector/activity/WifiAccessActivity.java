@@ -1,6 +1,7 @@
 package com.android.andrew.wifi_selector.activity;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -15,6 +16,8 @@ import com.android.andrew.wifi_selector.WifiConfigurationDecorator;
 import com.android.andrew.wifi_selector.WifiConnectionManager;
 import com.android.andrew.wifi_selector.WifiExpandableListAdapter;
 import com.android.andrew.wifi_selector.WifiManager;
+
+import java.util.ArrayList;
 
 public class WifiAccessActivity extends AppCompatActivity {
 
@@ -43,7 +46,7 @@ public class WifiAccessActivity extends AppCompatActivity {
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                WifiConfigurationDecorator requestedWifiConnection = adapter.getWifiDecorator(groupPosition, childPosition);
+                WifiConfigurationDecorator requestedWifiConnection = adapter.getChild(groupPosition, childPosition);
                 wifiConnecitonManager.connect(requestedWifiConnection);
                 return true;
             }
@@ -56,26 +59,35 @@ public class WifiAccessActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
-        bundle.putParcelableArrayList(BUNDLE_KEY_FAVOURITES, wifiManager.getFavourites());
+        bundle.putParcelableArrayList(BUNDLE_KEY_FAVOURITES, new ArrayList<Parcelable>( wifiManager.getFavourites() ) );
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo info) {
         super.onCreateContextMenu(menu, v, info);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.wifi_option_menu, menu);
+        ExpandableListContextMenuInfo menuInfo = (ExpandableListContextMenuInfo) info;
+        if ( adapter.isFavouriteGroup(menuInfo.packedPosition) ) {
+            inflater.inflate(R.menu.wifi_favourite_menu, menu);
+        }
+        else {
+            inflater.inflate(R.menu.wifi_option_menu, menu);
+        }
 
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         ExpandableListContextMenuInfo info = (ExpandableListContextMenuInfo) item.getMenuInfo();
-        //ListView sourceView = (ListView) info.targetView;
-        //potential - a network becomes unknown do we remove it from the favourites
+
         switch (item.getItemId()) {
-            case R.id.favourite:
-                WifiConfigurationDecorator network = wifiConnecitonManager.getKnownNetwork((int) info.packedPosition);
-                wifiManager.addFavourite(network);
+            case R.id.favourite_add:
+                //Some rampant coupling between the adapter and the manager but means only maintaining on ds...
+                wifiManager.addFavourite(adapter.get( info.packedPosition ));
+                adapter.notifyDataSetChanged();
+                break;
+            case R.id.favourite_remove:
+                wifiManager.removeFavourite(adapter.get(info.packedPosition));
                 adapter.notifyDataSetChanged();
                 break;
             default:

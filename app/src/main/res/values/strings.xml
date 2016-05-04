@@ -2,7 +2,8 @@
     <string name="app_name">Wifi-Selector</string>
 
 
-    <string name="choice_favourite">Add as Favourite</string>
+    <string name="add_favourite_choice">Add as Favourite</string>
+    <string name="remove_favourite_choice">Remove Favourite</string>
 
     <!-- Strings related to Settings -->
 

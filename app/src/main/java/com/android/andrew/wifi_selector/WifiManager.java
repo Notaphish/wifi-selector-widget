@@ -1,43 +1,37 @@
 package com.android.andrew.wifi_selector;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class WifiManager {
 
-    private ArrayList<WifiConfigurationDecorator> favourites;
-    private final List<WifiConfigurationDecorator> knownNetworks;
+    private final LinkedHashSet<WifiConfigurationDecorator> favourites;
+    private final LinkedHashSet<WifiConfigurationDecorator> knownNetworks;
 
     public WifiManager(List<WifiConfigurationDecorator> knownNetworks) {
-        this.favourites = new ArrayList<>();
-        this.knownNetworks = knownNetworks;
+        this.favourites = new LinkedHashSet<>();
+        this.knownNetworks = new LinkedHashSet<>(knownNetworks);
     }
 
-    public void addFavourite( WifiConfigurationDecorator wifiConfig){
+    public void addFavourite(WifiConfigurationDecorator wifiConfig) {
         favourites.add(wifiConfig);
     }
-    public void addFavourites( List<WifiConfigurationDecorator> incFavourites ){
+
+    public void addFavourites(List<WifiConfigurationDecorator> incFavourites) {
         favourites.addAll(incFavourites);
     }
 
-    public List<WifiConfigurationDecorator> getKnownNetworks(){
+    public Set<WifiConfigurationDecorator> getKnownNetworks() {
         return knownNetworks;
     }
 
-    public boolean removeFavourite( WifiConfigurationDecorator favourite ){
-       return favourites.remove(favourite);
+    public boolean removeFavourite(WifiConfigurationDecorator favourite) {
+        return favourites.remove(favourite);
     }
 
-    public boolean hasNetworkAsFavourite( WifiConfigurationDecorator favourite ){
-        return favourites.contains(favourite);
-    }
-
-    public ArrayList<WifiConfigurationDecorator> getFavourites(){
+    public Set<WifiConfigurationDecorator> getFavourites() {
         return favourites;
-    }
-
-    public WifiConfigurationDecorator getFavourite( int index ){
-        return favourites.get(index);
     }
 
 }
