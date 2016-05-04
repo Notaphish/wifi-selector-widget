@@ -5,13 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class WifiExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -19,19 +22,23 @@ public class WifiExpandableListAdapter extends BaseExpandableListAdapter {
     public static final int KNOWN_NETWORK_GROUP = 1;
 
     private final List<String> groups;
-    private Map<String, List<WifiConfigurationDecorator>> groupToWifiDecorators;
+    private Map<String, Set<WifiConfigurationDecorator>> groupToWifiDecorators;
 
-    public WifiExpandableListAdapter(Context context, List<WifiConfigurationDecorator> incFavourites, List<WifiConfigurationDecorator> others) {
+    public WifiExpandableListAdapter(Context context, Set<WifiConfigurationDecorator> incFavourites, Set<WifiConfigurationDecorator> others) {
         super();
         groupToWifiDecorators = new HashMap<>();
         groups = Lists.newArrayList( context.getString(R.string.list_view_header_favourite), context.getString(R.string.list_view_header_known));
 
-        groupToWifiDecorators.put(groups.get(FAVOURITE_GROUP), incFavourites);
+        groupToWifiDecorators.put(groups.get(FAVOURITE_GROUP), incFavourites );
         groupToWifiDecorators.put(groups.get(KNOWN_NETWORK_GROUP), others);
     }
 
-    public WifiConfigurationDecorator getWifiDecorator(int groupPosition, int indexOfDecoratorWithinGroup) {
-        return getWifiDecoratorsForGroup(groupPosition).get(indexOfDecoratorWithinGroup);
+    public WifiConfigurationDecorator get(long packedPosition) {
+        return getChild(ExpandableListView.getPackedPositionGroup(packedPosition), ExpandableListView.getPackedPositionChild(packedPosition));
+    }
+
+    public boolean isFavouriteGroup(long packedPosition){
+        return ExpandableListView.getPackedPositionGroup(packedPosition) == FAVOURITE_GROUP;
     }
 
     @Override
@@ -50,8 +57,8 @@ public class WifiExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public Object getChild(int groupPosition, int indexOfDecoratorWithinGroup) {
-        return getWifiDecoratorsForGroup(groupPosition).get(indexOfDecoratorWithinGroup);
+    public WifiConfigurationDecorator getChild(int groupPosition, int indexOfDecoratorWithinGroup) {
+        return FluentIterable.from( getWifiDecoratorsForGroup(groupPosition) ).get( indexOfDecoratorWithinGroup );
     }
 
     @Override
@@ -92,7 +99,7 @@ public class WifiExpandableListAdapter extends BaseExpandableListAdapter {
         }
 
         TextView wifiName = (TextView) convertView.findViewById(R.id.listViewItem);
-        wifiName.setText(getWifiDecoratorsForGroup(groupPosition).get(indexOfDecoratorWithinGroup).toString());
+        wifiName.setText(getChild(groupPosition, indexOfDecoratorWithinGroup ).toString());
         return wifiName;
     }
 
@@ -100,8 +107,8 @@ public class WifiExpandableListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
-    
-    private List<WifiConfigurationDecorator> getWifiDecoratorsForGroup(int groupPosition) {
+
+    private Set<WifiConfigurationDecorator> getWifiDecoratorsForGroup(int groupPosition) {
         return groupToWifiDecorators.get(groups.get(groupPosition));
     }
 }
