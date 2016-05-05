@@ -59,7 +59,7 @@ public class WifiAccessActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
-        bundle.putParcelableArrayList(BUNDLE_KEY_FAVOURITES, new ArrayList<Parcelable>( wifiManager.getFavourites() ) );
+        bundle.putParcelableArrayList(BUNDLE_KEY_FAVOURITES, new ArrayList<Parcelable>(wifiManager.getFavourites()));
     }
 
     @Override
@@ -67,27 +67,32 @@ public class WifiAccessActivity extends AppCompatActivity {
         super.onCreateContextMenu(menu, v, info);
         MenuInflater inflater = getMenuInflater();
         ExpandableListContextMenuInfo menuInfo = (ExpandableListContextMenuInfo) info;
-        if ( adapter.isFavouriteGroup(menuInfo.packedPosition) ) {
+        if (ExpandableListView.getPackedPositionChild(menuInfo.packedPosition) != -1)
+            popupRelevantContextMenu(menu, inflater, menuInfo);
+
+    }
+
+    private void popupRelevantContextMenu(ContextMenu menu, MenuInflater inflater, ExpandableListContextMenuInfo menuInfo) {
+        if (adapter.isFavouriteGroup(ExpandableListView.getPackedPositionGroup(menuInfo.packedPosition))) {
             inflater.inflate(R.menu.wifi_favourite_menu, menu);
-        }
-        else {
+        } else {
             inflater.inflate(R.menu.wifi_option_menu, menu);
         }
-
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         ExpandableListContextMenuInfo info = (ExpandableListContextMenuInfo) item.getMenuInfo();
 
+        WifiConfigurationDecorator network = adapter.getChild(ExpandableListView.getPackedPositionGroup(info.packedPosition), ExpandableListView.getPackedPositionChild(info.packedPosition));
         switch (item.getItemId()) {
             case R.id.favourite_add:
                 //Some rampant coupling between the adapter and the manager but means only maintaining on ds...
-                wifiManager.addFavourite(adapter.get( info.packedPosition ));
+                wifiManager.addFavourite(network);
                 adapter.notifyDataSetChanged();
                 break;
             case R.id.favourite_remove:
-                wifiManager.removeFavourite(adapter.get(info.packedPosition));
+                wifiManager.removeFavourite(network);
                 adapter.notifyDataSetChanged();
                 break;
             default:
