@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.google.common.collect.FluentIterable;
@@ -33,12 +32,8 @@ public class WifiExpandableListAdapter extends BaseExpandableListAdapter {
         groupToWifiDecorators.put(groups.get(KNOWN_NETWORK_GROUP), others);
     }
 
-    public WifiConfigurationDecorator get(long packedPosition) {
-        return getChild(ExpandableListView.getPackedPositionGroup(packedPosition), ExpandableListView.getPackedPositionChild(packedPosition));
-    }
-
-    public boolean isFavouriteGroup(long packedPosition){
-        return ExpandableListView.getPackedPositionGroup(packedPosition) == FAVOURITE_GROUP;
+    public boolean isFavouriteGroup(int group){
+        return group == FAVOURITE_GROUP;
     }
 
     @Override
