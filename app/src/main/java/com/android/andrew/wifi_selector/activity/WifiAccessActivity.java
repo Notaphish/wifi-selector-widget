@@ -16,6 +16,7 @@ import com.android.andrew.wifi_selector.WifiConfigurationDecorator;
 import com.android.andrew.wifi_selector.WifiConnectionManager;
 import com.android.andrew.wifi_selector.WifiExpandableListAdapter;
 import com.android.andrew.wifi_selector.WifiManager;
+import com.android.andrew.wifi_selector.database.dao.SQLiteFavouritesDAOImpl;
 
 import java.util.ArrayList;
 
@@ -31,9 +32,12 @@ public class WifiAccessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wifi_access);
         wifiConnecitonManager = new WifiConnectionManager(getApplicationContext());
-        wifiManager = new WifiManager(wifiConnecitonManager.getKnownNetworks());
+        wifiManager = new WifiManager( new SQLiteFavouritesDAOImpl( getApplicationContext() ), wifiConnecitonManager.getKnownNetworks());
         if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_KEY_FAVOURITES))
-            wifiManager.addFavourites(savedInstanceState.<WifiConfigurationDecorator>getParcelableArrayList(BUNDLE_KEY_FAVOURITES));
+            wifiManager.reloadFavouritesFromList( savedInstanceState.<WifiConfigurationDecorator>getParcelableArrayList( BUNDLE_KEY_FAVOURITES ) );
+        else {
+            wifiManager.reloadFavouritesFromStorage();
+        }
 
 
         adapter = new WifiExpandableListAdapter(
@@ -88,7 +92,7 @@ public class WifiAccessActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.favourite_add:
                 //Some rampant coupling between the adapter and the manager but means only maintaining on ds...
-                wifiManager.addFavourite(network);
+                wifiManager.addFavourite( network );
                 adapter.notifyDataSetChanged();
                 break;
             case R.id.favourite_remove:
