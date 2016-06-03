@@ -38,6 +38,10 @@ public class WifiConfigurationDecorator implements Parcelable{
         dest.writeParcelable( delegate, flags);
     }
 
+    public String getSsid() {
+        return ssid;
+    }
+
     @Override
     public String toString() {
         return ssid;
