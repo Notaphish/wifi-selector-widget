@@ -31,7 +31,8 @@ public class WifiManager {
 	}
 
     public void reloadFavouritesFromList( List<WifiConfigurationDecorator> incFavourites ) {
-        favourites.addAll( incFavourites );
+        if ( incFavourites != null )
+            favourites.addAll( incFavourites );
     }
 
 	public void reloadFavouritesFromStorage() {
