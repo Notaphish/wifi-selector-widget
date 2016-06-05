@@ -36,8 +36,6 @@ public class WifiManager {
     }
 
 	public void reloadFavouritesFromStorage() {
-		//find all favourites that are known networks
-		//then transform those entities
 		List<FavouriteWifiEntity> storedFavourites = favouritesDAO.getFavourites();
 		for ( WifiConfigurationDecorator current : knownNetworks ) {
 			FavouriteWifiEntity targetEntity = new FavouriteWifiEntity( current.getSsid() );

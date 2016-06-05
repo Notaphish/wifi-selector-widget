@@ -21,13 +21,14 @@ import static org.hamcrest.Matchers.not;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 public class WifiManagerTest {
 
 	public static final String SSID = "test";
 	private WifiManager manager;
 	private List<WifiConfigurationDecorator> knownNetworks;
-	private FavouritesDAO mockDao;
+	private FavouritesDAO favouriteDao;
 
 	private WifiConfigurationDecorator favourite1;
 	private WifiConfigurationDecorator favourite2;
@@ -35,8 +36,8 @@ public class WifiManagerTest {
 	@Before
 	public void setup() {
 		knownNetworks = new ArrayList<>();
-		mockDao = mock( FavouritesDAO.class );
-		manager = new WifiManager( mockDao, knownNetworks );
+		favouriteDao = mock( FavouritesDAO.class );
+		manager = new WifiManager( favouriteDao, knownNetworks );
 
 		WifiConfiguration config = new WifiConfiguration();
 		config.SSID = SSID;
@@ -51,18 +52,18 @@ public class WifiManagerTest {
 	public void addFavourite_daoCallAndAddedToFavourites() {
 		manager.addFavourite( favourite1 );
 
-		verify( mockDao ).addFavourite( new FavouriteWifiEntity( SSID ) );
+		verify( favouriteDao ).addFavourite( new FavouriteWifiEntity( SSID ) );
 		assertThat( manager.getFavourites(), contains( favourite1 ) );
 	}
 
 	@Test
 	public void addFavourite_duplicateFavouriteNoDaoCall() {
 		manager.addFavourite( favourite1 );
-		verify( mockDao ).addFavourite( new FavouriteWifiEntity( SSID ) );
+		verify( favouriteDao ).addFavourite( new FavouriteWifiEntity( SSID ) );
 
 		manager.addFavourite( favourite1 );
 
-		verifyNoMoreInteractions( mockDao );
+		verifyNoMoreInteractions( favouriteDao );
 		assertThat( manager.getFavourites(), contains( favourite1 ) );
 	}
 
@@ -72,7 +73,7 @@ public class WifiManagerTest {
 
 		manager.removeFavourite( favourite1 );
 
-		verify( mockDao ).removeFavourite( new FavouriteWifiEntity( SSID ) );
+		verify( favouriteDao ).removeFavourite( new FavouriteWifiEntity( favourite1.getSsid() ) );
 		assertThat( manager.getFavourites(), not( contains( favourite1 ) ) );
 	}
 
@@ -97,4 +98,44 @@ public class WifiManagerTest {
 		assertThat( manager.getFavourites(), is( empty() ) );
 	}
 
+	@Test
+	public void reloadFavouritesFromStorage_emptyStorage() {
+		when( favouriteDao.getFavourites() ).thenReturn( Collections.<FavouriteWifiEntity>emptyList() );
+
+		manager.reloadFavouritesFromStorage();
+
+		assertThat( manager.getFavourites(), is( empty() ) );
+	}
+
+	@Test
+	public void reloadFavouritesFromStorage_existingStorageAllNetworksKnown() {
+		knownNetworks.add( favourite1 );
+		knownNetworks.add( favourite2 );
+		manager = new WifiManager( favouriteDao, knownNetworks );
+		when( favouriteDao.getFavourites() ).thenReturn( Lists.newArrayList( new FavouriteWifiEntity( favourite1.getSsid() ), new FavouriteWifiEntity( favourite2.getSsid() ) ) );
+
+		manager.reloadFavouritesFromStorage();
+
+		assertThat( manager.getFavourites(), contains( favourite1, favourite2 ) );
+	}
+
+	@Test
+	public void reloadFavouritesFromStorage_onlyOneKnownNetwork() {
+		knownNetworks.add( favourite2 );
+		manager = new WifiManager( favouriteDao, knownNetworks );
+		when( favouriteDao.getFavourites() ).thenReturn( Lists.newArrayList( new FavouriteWifiEntity( favourite1.getSsid() ), new FavouriteWifiEntity( favourite2.getSsid() ) ) );
+
+		manager.reloadFavouritesFromStorage();
+
+		assertThat( manager.getFavourites(), contains( favourite2 ) );
+	}
+
+	@Test
+	public void reloadFavouritesFromStorage_noKnownNetworks() {
+		when( favouriteDao.getFavourites() ).thenReturn( Lists.newArrayList( new FavouriteWifiEntity( favourite1.getSsid() ), new FavouriteWifiEntity( favourite2.getSsid() ) ) );
+
+		manager.reloadFavouritesFromStorage();
+
+		assertThat( manager.getFavourites(), is( empty() ) );
+	}
 }
