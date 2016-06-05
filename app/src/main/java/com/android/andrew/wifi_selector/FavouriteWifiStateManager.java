@@ -7,13 +7,13 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-public class WifiManager {
+public class FavouriteWifiStateManager {
 
     private final LinkedHashSet<WifiConfigurationDecorator> favourites;
     private final LinkedHashSet<WifiConfigurationDecorator> knownNetworks;
     private final FavouritesDAO favouritesDAO;
 
-    public WifiManager(FavouritesDAO favouriteDao, List<WifiConfigurationDecorator> knownNetworks) {
+    public FavouriteWifiStateManager( FavouritesDAO favouriteDao, List<WifiConfigurationDecorator> knownNetworks ) {
         this.favourites = new LinkedHashSet<>();
         this.knownNetworks = new LinkedHashSet<>(knownNetworks);
         favouritesDAO = favouriteDao;

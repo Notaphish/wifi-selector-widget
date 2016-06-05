@@ -23,10 +23,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-public class WifiManagerTest {
+public class FavouriteWifiStateManagerTest {
 
 	public static final String SSID = "test";
-	private WifiManager manager;
+	private FavouriteWifiStateManager manager;
 	private List<WifiConfigurationDecorator> knownNetworks;
 	private FavouritesDAO favouriteDao;
 
@@ -37,7 +37,7 @@ public class WifiManagerTest {
 	public void setup() {
 		knownNetworks = new ArrayList<>();
 		favouriteDao = mock( FavouritesDAO.class );
-		manager = new WifiManager( favouriteDao, knownNetworks );
+		manager = new FavouriteWifiStateManager( favouriteDao, knownNetworks );
 
 		WifiConfiguration config = new WifiConfiguration();
 		config.SSID = SSID;
@@ -111,7 +111,7 @@ public class WifiManagerTest {
 	public void reloadFavouritesFromStorage_existingStorageAllNetworksKnown() {
 		knownNetworks.add( favourite1 );
 		knownNetworks.add( favourite2 );
-		manager = new WifiManager( favouriteDao, knownNetworks );
+		manager = new FavouriteWifiStateManager( favouriteDao, knownNetworks );
 		when( favouriteDao.getFavourites() ).thenReturn( Lists.newArrayList( new FavouriteWifiEntity( favourite1.getSsid() ), new FavouriteWifiEntity( favourite2.getSsid() ) ) );
 
 		manager.reloadFavouritesFromStorage();
@@ -122,7 +122,7 @@ public class WifiManagerTest {
 	@Test
 	public void reloadFavouritesFromStorage_onlyOneKnownNetwork() {
 		knownNetworks.add( favourite2 );
-		manager = new WifiManager( favouriteDao, knownNetworks );
+		manager = new FavouriteWifiStateManager( favouriteDao, knownNetworks );
 		when( favouriteDao.getFavourites() ).thenReturn( Lists.newArrayList( new FavouriteWifiEntity( favourite1.getSsid() ), new FavouriteWifiEntity( favourite2.getSsid() ) ) );
 
 		manager.reloadFavouritesFromStorage();
