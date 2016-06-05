@@ -10,12 +10,12 @@ import java.util.List;
 public class WifiConnectionManager {
 
     private final WifiManager wifiManager;
-    private final List<WifiConfigurationDecorator> networkIds;
+    private final List<WifiConfigurationDecorator> knownNetworks;
 
 
     public WifiConnectionManager( Context context){
         wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        networkIds = new ArrayList<>();
+        knownNetworks = new ArrayList<>();
         populateNetworks();
     }
 
@@ -26,16 +26,12 @@ public class WifiConnectionManager {
             return;
         }
         for (WifiConfiguration wifiConfig : configuredNetworks) {
-            networkIds.add(new WifiConfigurationDecorator(wifiConfig));
+            knownNetworks.add( new WifiConfigurationDecorator( wifiConfig ) );
         }
     }
 
     public List<WifiConfigurationDecorator> getKnownNetworks(){
-        return networkIds;
-    }
-
-    public WifiConfigurationDecorator getKnownNetwork( int i){
-        return networkIds.get(i);
+        return knownNetworks;
     }
 
     public void connect( WifiConfigurationDecorator wifiConfig ){
