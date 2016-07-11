@@ -15,7 +15,7 @@ import com.android.andrew.wifi_selector.R;
 import com.android.andrew.wifi_selector.WifiConfigurationDecorator;
 import com.android.andrew.wifi_selector.WifiConnectionManager;
 import com.android.andrew.wifi_selector.WifiExpandableListAdapter;
-import com.android.andrew.wifi_selector.WifiManager;
+import com.android.andrew.wifi_selector.FavouriteWifiStateManager;
 import com.android.andrew.wifi_selector.database.dao.SQLiteFavouritesDAOImpl;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class WifiAccessActivity extends AppCompatActivity {
 
     private static final String BUNDLE_KEY_FAVOURITES = "FAVOURITES";
     private WifiConnectionManager wifiConnecitonManager;
-    private WifiManager wifiManager;
+    private FavouriteWifiStateManager wifiManager;
     private WifiExpandableListAdapter adapter;
 
     @Override
@@ -32,7 +32,7 @@ public class WifiAccessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wifi_access);
         wifiConnecitonManager = new WifiConnectionManager(getApplicationContext());
-        wifiManager = new WifiManager( new SQLiteFavouritesDAOImpl( getApplicationContext() ), wifiConnecitonManager.getKnownNetworks());
+        wifiManager = new FavouriteWifiStateManager( new SQLiteFavouritesDAOImpl( getApplicationContext() ), wifiConnecitonManager.getKnownNetworks());
         if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_KEY_FAVOURITES))
             wifiManager.reloadFavouritesFromList( savedInstanceState.<WifiConfigurationDecorator>getParcelableArrayList( BUNDLE_KEY_FAVOURITES ) );
         else {
