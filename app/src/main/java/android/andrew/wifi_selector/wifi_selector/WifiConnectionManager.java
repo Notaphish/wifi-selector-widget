@@ -1,4 +1,4 @@
-package com.android.andrew.wifi_selector;
+package android.andrew.wifi_selector.wifi_selector;
 
 import android.content.Context;
 import android.net.wifi.WifiConfiguration;

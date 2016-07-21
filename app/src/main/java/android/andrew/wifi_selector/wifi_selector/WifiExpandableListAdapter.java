@@ -1,4 +1,4 @@
-package com.android.andrew.wifi_selector;
+package android.andrew.wifi_selector.wifi_selector;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import com.android.andrew.wifi_selector.R;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 
@@ -26,7 +27,7 @@ public class WifiExpandableListAdapter extends BaseExpandableListAdapter {
     public WifiExpandableListAdapter(Context context, Set<WifiConfigurationDecorator> incFavourites, Set<WifiConfigurationDecorator> others) {
         super();
         groupToWifiDecorators = new HashMap<>();
-        groups = Lists.newArrayList( context.getString(R.string.list_view_header_favourite), context.getString(R.string.list_view_header_known));
+        groups = Lists.newArrayList( context.getString( R.string.list_view_header_favourite), context.getString(R.string.list_view_header_known));
 
         groupToWifiDecorators.put(groups.get(FAVOURITE_GROUP), incFavourites );
         groupToWifiDecorators.put(groups.get(KNOWN_NETWORK_GROUP), others);

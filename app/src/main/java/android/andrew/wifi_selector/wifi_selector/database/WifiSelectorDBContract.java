@@ -1,4 +1,4 @@
-package com.android.andrew.wifi_selector.database;
+package android.andrew.wifi_selector.wifi_selector.database;
 
 import android.provider.BaseColumns;
 

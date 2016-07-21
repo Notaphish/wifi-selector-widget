@@ -1,9 +1,12 @@
-package com.android.andrew.wifi_selector;
+package android.andrew.wifi_selector.wifi_selector;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.util.Log;
 import android.widget.RemoteViews;
+
+import com.android.andrew.wifi_selector.R;
 
 /**
  * Implementation of App Widget functionality.
@@ -14,10 +17,10 @@ public class WifiSelectorWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        CharSequence widgetText = WifiSelectorWidgetConfigureActivity.loadTitlePref(context, appWidgetId);
+        Log.d("WIDGET-2", "Update app widget");
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.wifi_selector_widget);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
+        views.setTextViewText(R.id.appwidget_text, "Barry");
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -26,6 +29,7 @@ public class WifiSelectorWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
+		Log.d("WIDGET-2", "Update app widget");
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }

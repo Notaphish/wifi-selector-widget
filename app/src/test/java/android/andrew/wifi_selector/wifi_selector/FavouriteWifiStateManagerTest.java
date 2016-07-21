@@ -1,9 +1,11 @@
-package com.android.andrew.wifi_selector;
+package android.andrew.wifi_selector.wifi_selector;
 
+import android.andrew.wifi_selector.wifi_selector.FavouriteWifiStateManager;
+import android.andrew.wifi_selector.wifi_selector.WifiConfigurationDecorator;
 import android.net.wifi.WifiConfiguration;
 
-import com.android.andrew.wifi_selector.database.FavouriteWifiEntity;
-import com.android.andrew.wifi_selector.database.FavouritesDAO;
+import android.andrew.wifi_selector.wifi_selector.database.FavouriteWifiEntity;
+import android.andrew.wifi_selector.wifi_selector.database.FavouritesDAO;
 import com.google.common.collect.Lists;
 
 import org.junit.Before;

@@ -1,10 +1,10 @@
-package com.android.andrew.wifi_selector.database;
+package android.andrew.wifi_selector.wifi_selector.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.android.andrew.wifi_selector.database.WifiSelectorDBContract.FeedEntry;
+import android.andrew.wifi_selector.wifi_selector.database.WifiSelectorDBContract.FeedEntry;
 
 public class WifiSelectDBHelper extends SQLiteOpenHelper {
 

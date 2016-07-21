@@ -1,5 +1,10 @@
-package com.android.andrew.wifi_selector.activity;
+package android.andrew.wifi_selector.wifi_selector.activity;
 
+import android.andrew.wifi_selector.wifi_selector.FavouriteWifiStateManager;
+import android.andrew.wifi_selector.wifi_selector.WifiConfigurationDecorator;
+import android.andrew.wifi_selector.wifi_selector.WifiConnectionManager;
+import android.andrew.wifi_selector.wifi_selector.WifiExpandableListAdapter;
+import android.andrew.wifi_selector.wifi_selector.database.dao.SQLiteFavouritesDAOImpl;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,11 +17,6 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 
 import com.android.andrew.wifi_selector.R;
-import com.android.andrew.wifi_selector.WifiConfigurationDecorator;
-import com.android.andrew.wifi_selector.WifiConnectionManager;
-import com.android.andrew.wifi_selector.WifiExpandableListAdapter;
-import com.android.andrew.wifi_selector.FavouriteWifiStateManager;
-import com.android.andrew.wifi_selector.database.dao.SQLiteFavouritesDAOImpl;
 
 import java.util.ArrayList;
 

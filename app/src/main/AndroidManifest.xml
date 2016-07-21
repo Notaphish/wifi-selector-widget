@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.WifiAccessActivity"
+            android:name="android.andrew.wifi_selector.wifi_selector.activity.WifiAccessActivity"
             android:label="@string/title_activity_wifi_access"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".WifiSelectorWidget">
+        <receiver android:name="android.andrew.wifi_selector.wifi_selector.WifiSelectorWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -31,11 +31,11 @@
                 android:resource="@xml/wifi_selector_widget_info" />
         </receiver>
 
-        <activity android:name=".WifiSelectorWidgetConfigureActivity">
+        <!--<activity android:name=".WifiSelectorWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
-        </activity>
+        </activity>-->
 
     </application>
 

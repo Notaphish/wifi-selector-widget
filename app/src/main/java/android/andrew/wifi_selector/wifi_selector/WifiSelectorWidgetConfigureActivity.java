@@ -1,4 +1,4 @@
-package com.android.andrew.wifi_selector;
+package android.andrew.wifi_selector.wifi_selector;
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
@@ -9,12 +9,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.android.andrew.wifi_selector.R;
+
 /**
  * The configuration screen for the {@link WifiSelectorWidget WifiSelectorWidget} AppWidget.
  */
 public class WifiSelectorWidgetConfigureActivity extends Activity {
 
-    private static final String PREFS_NAME = "com.android.andrew.wifi_selector.WifiSelectorWidget";
+    private static final String PREFS_NAME = "WifiSelectorWidget";
     private static final String PREF_PREFIX_KEY = "appwidget_";
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     EditText mAppWidgetText;
@@ -57,7 +59,7 @@ public class WifiSelectorWidgetConfigureActivity extends Activity {
         if (titleValue != null) {
             return titleValue;
         } else {
-            return context.getString(R.string.appwidget_text);
+            return context.getString( R.string.appwidget_text);
         }
     }
 

@@ -1,15 +1,16 @@
-package com.android.andrew.wifi_selector.database.dao;
+package android.andrew.wifi_selector.wifi_selector.database.dao;
 
+import android.andrew.wifi_selector.wifi_selector.database.FavouriteWifiEntity;
+import android.andrew.wifi_selector.wifi_selector.database.FavouritesDAO;
+import android.andrew.wifi_selector.wifi_selector.database.WifiSelectDBHelper;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.android.andrew.wifi_selector.database.FavouriteWifiEntity;
-import com.android.andrew.wifi_selector.database.FavouritesDAO;
-import com.android.andrew.wifi_selector.database.WifiSelectDBHelper;
-import com.android.andrew.wifi_selector.database.WifiSelectorDBContract.FeedEntry;
+import android.andrew.wifi_selector.wifi_selector.database.WifiSelectorDBContract.FeedEntry;
+import com.google.common.annotations.VisibleForTesting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,12 @@ public class SQLiteFavouritesDAOImpl implements FavouritesDAO {
 
 
 	public SQLiteFavouritesDAOImpl( Context context ) {
-		dbHelper = new WifiSelectDBHelper( context );
+		this( new WifiSelectDBHelper( context ) );
+	}
+
+	@VisibleForTesting
+	SQLiteFavouritesDAOImpl( WifiSelectDBHelper helper ) {
+		dbHelper = helper;
 		writiableDb = dbHelper.getWritableDatabase();
 		readableDb = dbHelper.getReadableDatabase();
 	}
