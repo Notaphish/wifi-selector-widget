@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="android.andrew.wifi_selector.wifi_selector.activity.WifiAccessActivity">
+    tools:context=".activity.WifiAccessActivity">
 
     <include layout="@layout/content_wifi_access" />
 

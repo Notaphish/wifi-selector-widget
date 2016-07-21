@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.andrew.wifi_selector">
+    package="andrew.wifi_selector">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -11,8 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="android.andrew.wifi_selector.wifi_selector.activity.WifiAccessActivity"
-            android:label="@string/title_activity_wifi_access"
+            android:name=".activity.WifiAccessActivity"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="android.andrew.wifi_selector.wifi_selector.WifiSelectorWidget">
+        <!--<receiver android:name="WifiSelectorWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -29,7 +29,7 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/wifi_selector_widget_info" />
-        </receiver>
+        </receiver>-->
 
         <!--<activity android:name=".WifiSelectorWidgetConfigureActivity">
             <intent-filter>

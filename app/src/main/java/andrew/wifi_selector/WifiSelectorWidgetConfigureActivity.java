@@ -1,4 +1,4 @@
-package android.andrew.wifi_selector.wifi_selector;
+package andrew.wifi_selector;
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
@@ -8,8 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-
-import com.android.andrew.wifi_selector.R;
 
 /**
  * The configuration screen for the {@link WifiSelectorWidget WifiSelectorWidget} AppWidget.

@@ -1,7 +1,7 @@
-package android.andrew.wifi_selector.wifi_selector;
+package andrew.wifi_selector;
 
-import android.andrew.wifi_selector.wifi_selector.database.FavouriteWifiEntity;
-import android.andrew.wifi_selector.wifi_selector.database.FavouritesDAO;
+import andrew.wifi_selector.database.FavouritesDAO;
+import andrew.wifi_selector.database.FavouriteWifiEntity;
 
 import java.util.LinkedHashSet;
 import java.util.List;

@@ -1,4 +1,4 @@
-package android.andrew.wifi_selector.wifi_selector.activity;
+package andrew.wifi_selector.activity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

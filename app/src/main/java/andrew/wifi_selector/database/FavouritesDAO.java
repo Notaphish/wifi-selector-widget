@@ -1,4 +1,4 @@
-package android.andrew.wifi_selector.wifi_selector.database;
+package andrew.wifi_selector.database;
 
 import java.util.List;
 

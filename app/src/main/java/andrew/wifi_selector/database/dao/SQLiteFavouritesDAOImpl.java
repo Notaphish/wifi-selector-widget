@@ -1,15 +1,16 @@
-package android.andrew.wifi_selector.wifi_selector.database.dao;
+package andrew.wifi_selector.database.dao;
 
-import android.andrew.wifi_selector.wifi_selector.database.FavouriteWifiEntity;
-import android.andrew.wifi_selector.wifi_selector.database.FavouritesDAO;
-import android.andrew.wifi_selector.wifi_selector.database.WifiSelectDBHelper;
+import andrew.wifi_selector.database.FavouritesDAO;
+import andrew.wifi_selector.database.WifiSelectDBHelper;
+import andrew.wifi_selector.database.WifiSelectorDBContract;
+import andrew.wifi_selector.database.FavouriteWifiEntity;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import android.andrew.wifi_selector.wifi_selector.database.WifiSelectorDBContract.FeedEntry;
 import com.google.common.annotations.VisibleForTesting;
 
 import java.util.ArrayList;
@@ -37,8 +38,8 @@ public class SQLiteFavouritesDAOImpl implements FavouritesDAO {
 	@Override
 	public void addFavourite( FavouriteWifiEntity entityToAdd ) {
 		ContentValues values = new ContentValues();
-		values.put( FeedEntry.COLUMN_NAME_SSID, entityToAdd.getSsid() );
-		long result = writiableDb.insert( FeedEntry.TABLE_NAME, null, values );
+		values.put( WifiSelectorDBContract.FeedEntry.COLUMN_NAME_SSID, entityToAdd.getSsid() );
+		long result = writiableDb.insert( WifiSelectorDBContract.FeedEntry.TABLE_NAME, null, values );
 		if ( result == -1 ){
 			//TODO should be nice exceptions
 			throw new RuntimeException( "Failed to insert into database");
@@ -53,7 +54,7 @@ public class SQLiteFavouritesDAOImpl implements FavouritesDAO {
 
 	@Override
 	public void removeFavourite( String ssid ) {
-		int deletedItems = writiableDb.delete( FeedEntry.TABLE_NAME, FeedEntry.COLUMN_NAME_SSID + "=?", new String[]{ssid} );
+		int deletedItems = writiableDb.delete( WifiSelectorDBContract.FeedEntry.TABLE_NAME, WifiSelectorDBContract.FeedEntry.COLUMN_NAME_SSID + "=?", new String[]{ssid} );
 		if ( deletedItems > 1)
 			Log.d( TAG, "Deleted more than one favourite - strange. Total items delete is " + deletedItems );
 		else if ( deletedItems == 0 )
@@ -65,7 +66,7 @@ public class SQLiteFavouritesDAOImpl implements FavouritesDAO {
 
 	@Override
 	public List<FavouriteWifiEntity> getFavourites() {
-		Cursor selection = readableDb.query( false, FeedEntry.TABLE_NAME, new String[]{FeedEntry.COLUMN_NAME_SSID},null ,null, null, null, null, null );
+		Cursor selection = readableDb.query( false, WifiSelectorDBContract.FeedEntry.TABLE_NAME, new String[]{WifiSelectorDBContract.FeedEntry.COLUMN_NAME_SSID},null ,null, null, null, null, null );
 
 		List<FavouriteWifiEntity> entities = new ArrayList<>();
 		while ( selection.moveToNext() ) {

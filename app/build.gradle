@@ -5,11 +5,11 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.android.andrew.wifi_selector"
+        applicationId "andrew.wifi_selector"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
-        versionName "ALPHA"
+        versionName "BETA"
     }
     buildTypes {
         release {

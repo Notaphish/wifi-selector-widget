@@ -1,4 +1,4 @@
-package android.andrew.wifi_selector.wifi_selector;
+package andrew.wifi_selector;
 
 import android.net.wifi.WifiConfiguration;
 import android.os.Parcel;
