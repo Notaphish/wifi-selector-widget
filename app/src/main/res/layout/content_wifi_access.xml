@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="android.andrew.wifi_selector.wifi_selector.activity.WifiAccessActivity"
+    tools:context=".activity.WifiAccessActivity"
     tools:showIn="@layout/activity_wifi_access"
     android:theme="@style/AppTheme">
 

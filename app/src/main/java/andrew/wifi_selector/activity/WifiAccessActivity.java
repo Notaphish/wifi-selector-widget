@@ -1,10 +1,5 @@
-package android.andrew.wifi_selector.wifi_selector.activity;
+package andrew.wifi_selector.activity;
 
-import android.andrew.wifi_selector.wifi_selector.FavouriteWifiStateManager;
-import android.andrew.wifi_selector.wifi_selector.WifiConfigurationDecorator;
-import android.andrew.wifi_selector.wifi_selector.WifiConnectionManager;
-import android.andrew.wifi_selector.wifi_selector.WifiExpandableListAdapter;
-import android.andrew.wifi_selector.wifi_selector.database.dao.SQLiteFavouritesDAOImpl;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,9 +11,14 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 
-import com.android.andrew.wifi_selector.R;
-
 import java.util.ArrayList;
+
+import andrew.wifi_selector.R;
+import andrew.wifi_selector.WifiConnectionManager;
+import andrew.wifi_selector.FavouriteWifiStateManager;
+import andrew.wifi_selector.WifiConfigurationDecorator;
+import andrew.wifi_selector.WifiExpandableListAdapter;
+import andrew.wifi_selector.database.dao.SQLiteFavouritesDAOImpl;
 
 public class WifiAccessActivity extends AppCompatActivity {
 

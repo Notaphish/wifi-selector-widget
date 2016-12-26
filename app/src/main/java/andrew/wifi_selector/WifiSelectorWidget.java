@@ -1,12 +1,10 @@
-package android.andrew.wifi_selector.wifi_selector;
+package andrew.wifi_selector;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.util.Log;
 import android.widget.RemoteViews;
-
-import com.android.andrew.wifi_selector.R;
 
 /**
  * Implementation of App Widget functionality.

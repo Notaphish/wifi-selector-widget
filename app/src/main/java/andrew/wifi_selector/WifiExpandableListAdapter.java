@@ -1,4 +1,4 @@
-package android.andrew.wifi_selector.wifi_selector;
+package andrew.wifi_selector;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.android.andrew.wifi_selector.R;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 
